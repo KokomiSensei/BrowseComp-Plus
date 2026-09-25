@@ -425,6 +425,16 @@ def main():
         default=1,
         help="Tensor parallel size for vLLM",
     )
+    parser.add_argument(
+        "--disable-custom-all-reduce",
+        action="store_true",
+        help="Use NCCL instead of vLLM custom all-reduce kernels.",
+    )
+    parser.add_argument(
+        "--enforce-eager",
+        action="store_true",
+        help="Disable CUDA graph capture for broader GPU/driver compatibility.",
+    )
     args = parser.parse_args()
 
     input_dir = Path(args.input_dir)
@@ -457,7 +467,12 @@ def main():
     all_results = []
 
     # Initialize vLLM engine and sampling params
-    llm = LLM(model=args.model, tensor_parallel_size=args.tensor_parallel_size)
+    llm = LLM(
+        model=args.model,
+        tensor_parallel_size=args.tensor_parallel_size,
+        disable_custom_all_reduce=args.disable_custom_all_reduce,
+        enforce_eager=args.enforce_eager,
+    )
     sampling_params = SamplingParams(
         temperature=args.temperature,
         top_p=args.top_p,

@@ -55,6 +55,15 @@ class FaissSearcher(BaseSearcher):
             help="Torch dtype for FAISS search (default: float16)",
         )
         parser.add_argument(
+            "--attn-implementation",
+            default="sdpa",
+            choices=["eager", "sdpa", "flash_attention_2"],
+            help=(
+                "Attention backend for the embedding model (default: sdpa). "
+                "Use flash_attention_2 only when flash-attn is installed."
+            ),
+        )
+        parser.add_argument(
             "--dataset-name",
             default="Tevatron/browsecomp-plus-corpus",
             help="Dataset name for document retrieval in FAISS search (default: Tevatron/browsecomp-plus-corpus)",
@@ -161,6 +170,7 @@ class FaissSearcher(BaseSearcher):
             normalize=self.args.normalize,
             pooling=self.args.pooling,
             cache_dir=cache_dir,
+            attn_implementation=self.args.attn_implementation,
         )
 
         if self.args.torch_dtype == "float16":
