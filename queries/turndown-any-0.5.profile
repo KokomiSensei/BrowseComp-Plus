@@ -1,0 +1,2 @@
+{"corpus": "browsecomp-plus-corpus", "dataset": "Tevatron/browsecomp-plus", "eligible": 129, "excluded": 701, "exclusion_reasons": {"blocked_html": 182, "empty_markdown": 16, "low_containment": 632, "missing_dataset": 1, "missing_markdown": 167}, "output": "turndown-any-0.5.tsv", "policy": {"min_containment": 0.5, "related_docs": "evidence-gold", "source_status": "any"}, "resolved_revision": "144cff8e35b5eaef7e526346aa60774a9deb941f", "resource": {"profile": "default-v1", "type": "turndown"}, "split": "test", "total": 830}
+Wrote 129 questions to turndown-any-0.5.tsv
