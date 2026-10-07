@@ -12,13 +12,13 @@
 
 单一正文工具可实现 `CustomSearcher`，将 `search` 委托给 BM25/FAISS，仅替换 `get_document`。多个独立工具需扩展客户端 handler 的定义与分派；或在本地 MCP 服务注册多个正文工具，再用 Qwen 客户端发现。现有 CLI 只提供可选的 `get_document`，不是任意工具插件配置。
 
-依据：[自定义接口](../../searcher/searchers/custom_searcher.py#L13)、[工具定义与分派](../../search_agent/openai_client.py#L40)、[MCP 注册](../../searcher/tools.py#L8)、[Qwen MCP](../../search_agent/qwen_client.py#L43)。返回格式以实现为准：检索候选 `{"docid","score","text"}`，正文 `{"docid","text"}`；基类注释中的 `snippet` 与实际实现不一致。
+依据：[自定义接口](../../searcher/searchers/custom_searcher.py#L37)、[工具定义与分派](../../search_agent/openai_client.py#L23)、[MCP 注册](../../searcher/tools.py#L7)、[Qwen MCP](../../search_agent/qwen_client.py#L43)。`BaseSearcher.search()` 统一返回 `docid/score/snippet`，snippet 在 searcher 中按 `--snippet-max-tokens` 截断；`get_document()` 返回完整 `text`。客户端只负责传递结果，不再加载 tokenizer 或生成 snippet。
 
 ## 3. 怎样保证正文子集实验不被完整数据绕过？
 
-只替换正文工具不够：自带 `search` 会从完整索引或语料读取正文并输出摘要。建议保留排序和 docid，但摘要仅由本地正文生成；缺失正文返回明确不可用状态。若过滤候选或扩大召回补足 top-k，会改变检索条件，应固定并记录规则。所有正文工具须使用一致的可用文档集合。
+自定义 searcher 保留现成排序器的 docid/score，再从指定本地 corpus artifact 生成 snippet；正文缺失时显式返回错误，不从原始索引回退。`get_document` 也只读同一 artifact。若过滤候选或扩大召回补足 top-k，会改变检索条件，应固定并记录规则。`--snippet-max-tokens -1` 会关闭截断，但不会改变正文来源。
 
-依据：[BM25 返回正文](../../searcher/searchers/bm25_searcher.py#L43)、[FAISS 载入语料](../../searcher/searchers/faiss_searcher.py#L208)、[FAISS 返回正文](../../searcher/searchers/faiss_searcher.py#L281)、[摘要输出](../../searcher/tools.py#L34)。`--snippet-max-tokens -1` 会输出完整正文，不能用于阻断泄漏。
+依据：[BM25 搜索结果](../../searcher/searchers/bm25_searcher.py#L43)、[FAISS 搜索结果](../../searcher/searchers/faiss_searcher.py#L262)、[自定义正文来源](../../searcher/searchers/custom_searcher.py#L97)、[基类 snippet 契约](../../searcher/searchers/base.py#L46)。
 
 ## 4. 怎样指定一系列问题并开始测试？
 
