@@ -11,3 +11,4 @@ topics-qrels/queries.tsv
 runs/
 evals/
 .agents/
+queries
