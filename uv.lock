@@ -1251,6 +1251,7 @@ dependencies = [
     { name = "httpx" },
     { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'darwin'" },
     { name = "huggingface-hub", version = "1.33.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin'" },
+    { name = "openai" },
     { name = "python-dotenv" },
     { name = "rich" },
     { name = "selectolax" },
@@ -1264,6 +1265,7 @@ requires-dist = [
     { name = "datasets", specifier = ">=4.0,<5" },
     { name = "httpx", specifier = ">=0.28,<1" },
     { name = "huggingface-hub", specifier = ">=0.34,<2" },
+    { name = "openai", specifier = ">=2,<3" },
     { name = "python-dotenv", specifier = ">=1.1,<2" },
     { name = "rich", specifier = ">=14.0,<15" },
     { name = "selectolax", specifier = ">=0.4,<1" },
@@ -2177,7 +2179,7 @@ wheels = [
 
 [[package]]
 name = "openai"
-version = "1.97.0"
+version = "2.54.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -2189,9 +2191,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e0/c6/b8d66e4f3b95493a8957065b24533333c927dc23817abe397f13fe589c6e/openai-1.97.0.tar.gz", hash = "sha256:0be349569ccaa4fb54f97bb808423fd29ccaeb1246ee1be762e0c81a47bae0aa", size = 493850, upload-time = "2025-07-16T16:37:35.196Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/50/9a/8c75e8c8a5b407a0586faeb2afac91674ff955c191ecc1d6d3b6669f6788/openai-2.54.0.tar.gz", hash = "sha256:e3e6f8bc1ba30ddf381ace1a14340eed381cb984a1a59bd0f34b5be3b5d49cfa", size = 1100285, upload-time = "2026-08-11T18:46:59.035Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8a/91/1f1cf577f745e956b276a8b1d3d76fa7a6ee0c2b05db3b001b900f2c71db/openai-1.97.0-py3-none-any.whl", hash = "sha256:a1c24d96f4609f3f7f51c9e1c2606d97cc6e334833438659cfd687e9c972c610", size = 764953, upload-time = "2025-07-16T16:37:33.135Z" },
+    { url = "https://files.pythonhosted.org/packages/64/a8/bb76c7356de8ad57f59d5ff993d434df0607f07f08bcc9c9a5c275e399c0/openai-2.54.0-py3-none-any.whl", hash = "sha256:89089789197ccdb87f173a03145ed1598d00795220c93e96cf712b1cbf5e5f2b", size = 1660351, upload-time = "2026-08-11T18:46:56.684Z" },
 ]
 
 [[package]]
